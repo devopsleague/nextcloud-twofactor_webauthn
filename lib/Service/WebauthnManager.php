@@ -89,7 +89,7 @@ class WebauthnManager {
 		ISession $session,
 		WebauthnPublicKeyCredentialSourceRepository $repository,
 		PublicKeyCredentialEntityMapper $mapper,
-		IEventDispatcher $eventDispatcher,
+		IEventDispatcher $eventDispatcher
 	) {
 		$this->session = $session;
 		$this->repository = $repository;
@@ -248,6 +248,7 @@ class WebauthnManager {
 		// Extensions
 		$extensions = new AuthenticationExtensionsClientInputs();
 		$extensions->add(new AuthenticationExtension('loc', true));
+		$extensions->add(new AuthenticationExtension('appid', "https://$serverHost"));
 
 		$activeDevices = array_filter($this->mapper->findPublicKeyCredentials($user->getUID()),
 		   function ($device) {
